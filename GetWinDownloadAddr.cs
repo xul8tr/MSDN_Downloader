@@ -1,10 +1,10 @@
  
  /*   
-            headaccept：接受的内容类型
+            headaccept：头文件接受的内容类型
             contentype：请求媒体类型
             urlref:有些网站会验证Referer地址
             head：头文件内容
-            mycookiecontainer：cookie容器,为了保险每次提取cookiesheader项目加入到容器
+            mycookiecontainer：cookie容器,为了保险,每次提取cookiesheader项目加入到容器
             redirect_geturl：跳转地址
  */
             Url = "https://www.microsoft.com/en-us/software-download/windows10ISO";       //从官方网站下载
@@ -70,14 +70,13 @@
             //提交获取到的内容
             string postdata7 = "error=" + HttpUtility.UrlEncode(error) + "&error_description=" + HttpUtility.UrlEncode(error_description) + "&state=" + HttpUtility.UrlEncode(state);
             var ResponseString7 = RequestPost(action_url, "*/*", contentype, url6, head1, postdata7, mycookiecontainer, out redirect_posturl);
+            //选择语言,这里已经有语言列表供选择,略过
             WebHeaderCollection head8 = new WebHeaderCollection()     //头部内容结构
                            {
                                {"Accept-Encoding:gzip, deflate"},
                                {"X-Requested-With", "XMLHttpRequest"},
                                {"Cache-Control","no-cache"}
-                           };
-           
-            //选择语言,这里已经有语言列表供选择,略过
+                           };           
             contentype = "application/x-www-form-urlencoded";
             var url8 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=a8f8f489-4c7f-463a-9ca6-5cff94d8d041&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=getskuinformationbyproductedition&sessionId=" + sessionId + "&productEditionId=" + productEditionId + "&sdVersion=2";
             var postdata8 = "controlAttributeMapping=";
