@@ -94,7 +94,7 @@
             //    var value = options[i].GetAttributeValue("value","/");
             //    var jsonstring = Regex.Replace((string)Regex.Match(options[i].OuterHtml, @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}").Groups[0].Value, @"\s", "");
             //    if (jsonstring!="")
-            //    jsons = jsons + "," + jsonstring;                
+            //    jsons = jsons + "," + jsonstring;      //拼接语言列表为json格式字符串                
             //}
             //try
             //{
