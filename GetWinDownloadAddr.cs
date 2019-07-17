@@ -82,7 +82,34 @@
             var url8 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=a8f8f489-4c7f-463a-9ca6-5cff94d8d041&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=getskuinformationbyproductedition&sessionId=" + sessionId + "&productEditionId=" + productEditionId + "&sdVersion=2";
             var postdata8 = "controlAttributeMapping=";
             var ResponseString8 = RequestPost(url8, "*/*", contentype, url1, head8, postdata8, mycookiecontainer, out redirect_posturl);
-                           
+            
+            //获取语言列表
+            //var retstr = HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8));
+            //HtmlAgilityPack.HtmlDocument htmldocument8 = new HtmlAgilityPack.HtmlDocument();
+            //htmldocument8.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8)));
+            //HtmlNode.ElementsFlags.Remove("option"); 
+            //var options = htmldocument8.DocumentNode.SelectNodes("//select[@id='product-languages']/option");
+            //for (var i = 0; i < options.Count; i++)
+            //{
+            //    var val = options[i].InnerHtml;
+            //    var value = options[i].GetAttributeValue("value","/");
+            //    var jsonstring = Regex.Replace((string)Regex.Match(options[i].OuterHtml, @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}").Groups[0].Value, @"\s", "");
+            //    if (jsonstring!="")
+            //    jsons = jsons + "," + jsonstring;                
+            //}
+            //try
+            //{
+            //    jsons="{\"value\":[" + jsons.TrimStart(',').Replace("=\"\"", " ") + "]}";
+            //    JToken token8 = JObject.Parse(jsons);
+            //    languages = (string)token8.SelectToken("$.language");
+            //    lanuageID = (string)token8.SelectToken("$.id");
+            //}
+            //catch
+            //{
+            //}
+
+
+
             //获取下载链接               
             contentype = "application/x-www-form-urlencoded";
             var url9 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=cfa9e580-a81e-4a4b-a846-7b21bf4e2e5b&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=GetProductDownloadLinksBySku&sessionId=" + sessionId + "&skuId=" + lanuageID + "&language=" + HttpUtility.HtmlEncode(comboxlan.text) + "&sdVersion=2";
