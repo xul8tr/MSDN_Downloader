@@ -36,7 +36,7 @@
                 }
             }
             var ResponseString6 = RequestGet("https://login.microsoftonline.com" + urlPost, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl);
-            string action_url = "", error = "", error_description = "", state = "";   //获取POST网址及POST提交内容
+            string action_url = "", error = "", error_description = "", state = "";   //获取POST提交网址及POST提交内容
             HtmlAgilityPack.HtmlDocument htmldocument6 = new HtmlAgilityPack.HtmlDocument();
             htmldocument6.LoadHtml(ResponseString6);
             HtmlNodeCollection formNodes6 = htmldocument6.DocumentNode.SelectNodes("//form");
