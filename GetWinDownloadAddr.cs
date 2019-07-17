@@ -100,8 +100,11 @@
             //{
             //    jsons="{\"value\":[" + jsons.TrimStart(',').Replace("=\"\"", " ") + "]}";
             //    JToken token8 = JObject.Parse(jsons);
-            //    IEnumerable<JToken> languages = (string)token8.SelectToken("$.language");
+            //    IList<string> languages = (string)token8.SelectToken("$.language").ToList();
             //    IEnumerable<JToken> lanuageID = (string)token8.SelectToken("$.id");
+            //    BindingSource bslanguages = new BindingSource();
+            //    bslanguages.DataSource = languages;
+            //    comboBoxlan.DataSource = bslanguages;    
             //}
             //catch
             //{
