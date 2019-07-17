@@ -100,8 +100,8 @@
             //{
             //    jsons="{\"value\":[" + jsons.TrimStart(',').Replace("=\"\"", " ") + "]}";
             //    JToken token8 = JObject.Parse(jsons);
-            //    languages = (string)token8.SelectToken("$.language");
-            //    lanuageID = (string)token8.SelectToken("$.id");
+            //    IEnumerable<JToken> languages = (string)token8.SelectToken("$.language");
+            //    IEnumerable<JToken> lanuageID = (string)token8.SelectToken("$.id");
             //}
             //catch
             //{
