@@ -85,7 +85,7 @@
                            
             //获取下载链接               
             contentype = "application/x-www-form-urlencoded";
-            var url9 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=cfa9e580-a81e-4a4b-a846-7b21bf4e2e5b&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=GetProductDownloadLinksBySku&sessionId=" + sessionId + "&skuId=" + lanuageID + "&language=" + HttpUtility.HtmlEncode(combox4) + "&sdVersion=2";
+            var url9 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=cfa9e580-a81e-4a4b-a846-7b21bf4e2e5b&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=GetProductDownloadLinksBySku&sessionId=" + sessionId + "&skuId=" + lanuageID + "&language=" + HttpUtility.HtmlEncode(comboxlan.text) + "&sdVersion=2";
             var postdata9 = "controlAttributeMapping=";
             var ResponseString9 = RequestPost(url9, "*/*", contentype, url1, head8, postdata9, mycookiecontainer, out redirect_posturl);
             HtmlAgilityPack.HtmlDocument htmldocument9 = new HtmlAgilityPack.HtmlDocument();
