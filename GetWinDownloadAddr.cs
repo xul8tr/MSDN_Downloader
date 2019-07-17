@@ -91,7 +91,6 @@
             //var options = htmldocument8.DocumentNode.SelectNodes("//select[@id='product-languages']/option");
             //for (var i = 0; i < options.Count; i++)
             //{
-            //    var val = options[i].InnerHtml;
             //    var value = options[i].GetAttributeValue("value","/");
             //    var jsonstring = Regex.Replace((string)Regex.Match(options[i].OuterHtml, @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}").Groups[0].Value, @"\s", "");
             //    if (jsonstring!="")
