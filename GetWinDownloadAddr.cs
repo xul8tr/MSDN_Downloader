@@ -1,5 +1,6 @@
  
  /*   
+            获取微软系统最新镜像下载地址
             headaccept：头文件接受的内容类型
             contentype：请求媒体类型
             urlref:有些网站会验证Referer地址
@@ -67,12 +68,14 @@
                 }
 
             }
-            //提交获取到的内容
+          
             string postdata7 = "error=" + HttpUtility.UrlEncode(error) + "&error_description=" + HttpUtility.UrlEncode(error_description) + "&state=" + HttpUtility.UrlEncode(state);
             var ResponseString7 = RequestPost(action_url, "*/*", contentype, url6, head1, postdata7, mycookiecontainer, out redirect_posturl);
-            //选择语言,这里已经有语言列表供选择,略过
+            //获取语言列表
             WebHeaderCollection head8 = new WebHeaderCollection()     //头部内容结构
                            {
+                               {"Request-Context", "appId=cid-v1:1b965f14-4848-4cb3-9553-535435b89811" },
+                               {"Request-Id", "|zIDHB.8SyaY" },
                                {"Accept-Encoding:gzip, deflate"},
                                {"X-Requested-With", "XMLHttpRequest"},
                                {"Cache-Control","no-cache"}
@@ -82,40 +85,49 @@
             var postdata8 = "controlAttributeMapping=";
             var ResponseString8 = RequestPost(url8, "*/*", contentype, url1, head8, postdata8, mycookiecontainer, out redirect_posturl);
             
-            //获取语言列表
-            //var retstr = HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8));
-            //HtmlAgilityPack.HtmlDocument htmldocument8 = new HtmlAgilityPack.HtmlDocument();
-            //htmldocument8.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8)));
-            //HtmlNode.ElementsFlags.Remove("option"); 
-            //var options = htmldocument8.DocumentNode.SelectNodes("//select[@id='product-languages']/option");
-            //for (var i = 0; i < options.Count; i++)
-            //{
-            //    var value = options[i].GetAttributeValue("value","/");
-            //    var jsonstring = Regex.Replace((string)Regex.Match(options[i].OuterHtml, @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}").Groups[0].Value, @"\s", "");
-            //    if (jsonstring!="")
-            //    jsons = jsons + "," + jsonstring;      //拼接语言列表为json格式字符串                
-            //}
-            //try
-            //{
-            //    jsons="{\"value\":[" + jsons.TrimStart(',').Replace("=\"\"", " ") + "]}";
-            //    JToken token8 = JObject.Parse(jsons);
-            //    IList<string> languages = (string)token8.SelectToken("$.language").ToList();
-            //    IEnumerable<JToken> lanuageID = (string)token8.SelectToken("$.id");
-            //    BindingSource bslanguages = new BindingSource();
-            //    bslanguages.DataSource = languages;
-            //    comboBoxlan.DataSource = bslanguages;    
-            //}
-            //catch
-            //{
-            //}
+            var jsons="";
+            var retstr = HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8));
+            HtmlAgilityPack.HtmlDocument htmldocument8 = new HtmlAgilityPack.HtmlDocument();
+            htmldocument8.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString8)));
+            HtmlNode.ElementsFlags.Remove("option"); // need this before you do anything with HAP
+            var options = htmldocument8.DocumentNode.SelectNodes("//select[@id='product-languages']/option");
+            for (var i = 0; i < options.Count; i++)
+            {
+                var val = options[i].InnerHtml;
+                var value = options[i].GetAttributeValue("value", "/");
+                var jsonstring = Regex.Replace((string)Regex.Match(options[i].OuterHtml, @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}").Groups[0].Value, @"\s", "");
+                if (jsonstring != "")
+                    jsons = jsons + "," + jsonstring;
+            }
+            try
+            {
+                jsons = "{\"value\":[" + jsons.TrimStart(',').Replace("=\"\"", " ") + "]}";
+                JToken token8 = JObject.Parse(jsons);
+                //languages = (string)token8.SelectToken("$.language");
+                //lanuageID = (string)token8.SelectToken("$.id");
+                string combox = "";
+                comboBox4.Invoke(new MethodInvoker(delegate { combox=comboBox4.Text; }));
+                lanuageID = token8.SelectToken("$.value[?(@.language == '" + combox + "')].id").ToString().ToLower();
+            }
+            catch
+            {
+            }
 
 
 
-            //获取下载链接               
+            //获取下载链接       
+            WebHeaderCollection head9 = new WebHeaderCollection()
+                           {
+                               {"Request-Context", "appId=cid-v1:1b965f14-4848-4cb3-9553-535435b89811" },
+                               {"Request-Id", "|zIDHB.8SyaY" },
+                               {"Accept-Encoding:gzip, deflate"},
+                               {"X-Requested-With", "XMLHttpRequest"},
+                               {"Cache-Control","no-cache"}
+                           };
             contentype = "application/x-www-form-urlencoded";
             var url9 = "https://www.microsoft.com/en-us/api/controls/contentinclude/html?pageId=cfa9e580-a81e-4a4b-a846-7b21bf4e2e5b&host=www.microsoft.com&segments=software-download%2cwindows10ISO&query=&action=GetProductDownloadLinksBySku&sessionId=" + sessionId + "&skuId=" + lanuageID + "&language=" + HttpUtility.HtmlEncode(comboxlan.text) + "&sdVersion=2";
             var postdata9 = "controlAttributeMapping=";
-            var ResponseString9 = RequestPost(url9, "*/*", contentype, url1, head8, postdata9, mycookiecontainer, out redirect_posturl);
+            var ResponseString9 = RequestPost(url9, "*/*", contentype, url1, head9, postdata9, mycookiecontainer, out redirect_posturl);
             HtmlAgilityPack.HtmlDocument htmldocument9 = new HtmlAgilityPack.HtmlDocument();
             htmldocument9.LoadHtml(HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString9)));
             foreach (HtmlNode divNode in htmldocument9.DocumentNode.SelectNodes("//div[@class='row-fluid']"))
