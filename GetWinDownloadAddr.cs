@@ -1,22 +1,22 @@
  
  /*   
-            获取微软系统最新镜像下载地址
-            headaccept：头文件接受的内容类型
-            contentype：请求媒体类型
-            urlref:有些网站会验证Referer地址
-            head：头文件内容
-            mycookiecontainer：cookie容器,为了保险,每次提取cookiesheader项目加入到容器
-            redirect_geturl：跳转地址
+            Get the latest mirror download address of Microsoft system
+            headaccept：Content type accepted by header file
+            contentype：Request media type
+            urlref:Some websites will verify the Referer address
+            head：Header file content
+            mycookiecontainer：Cookie container, for insurance, every time the cookies header item is extracted and added to the container
+            redirect_geturl：Jump address
  */
-            Url = "https://www.microsoft.com/en-us/software-download/windows10ISO";       //从官方网站下载
+            Url = "https://www.microsoft.com/en-us/software-download/windows10ISO";       //Download from the official website
             var ResponseString1 = RequestGet(url1, headaccept, contentype, urlref, head1, mycookiecontainer, out redirect_geturl);
  
-            var url2 = "https://www.microsoft.com/en-us/silentauth";   //登录
-            RequestGet(url2, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl);  //跳转地址
-            RequestGet(redirect_geturl, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl); //跳转
-            RequestGet(redirect_geturl, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl); //跳转
+            var url2 = "https://www.microsoft.com/en-us/silentauth";   //log in
+            RequestGet(url2, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl);  //Jump address
+            RequestGet(redirect_geturl, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl); //Jump
+            RequestGet(redirect_geturl, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl); //Jump
             var ResponseString5 = RequestGet(redirect_geturl, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl);
-            string urlPost = "", sessionId = "";   //获取post地址和sessionId 
+            string urlPost = "", sessionId = "";   //Get the post address and sessionId
             MatchCollection match5 = Regex.Matches(HttpUtility.HtmlDecode(HttpUtility.UrlDecode(ResponseString5)), @"\{(?:[^\{\}]|(?<o>\{)|(?<-o>\}))+(?(o)(?!))\}", RegexOptions.Multiline | RegexOptions.IgnoreCase);
             foreach (Match match in match5)
             {
@@ -37,7 +37,7 @@
                 }
             }
             var ResponseString6 = RequestGet("https://login.microsoftonline.com" + urlPost, headaccept, contentype, url1, head1, mycookiecontainer, out redirect_geturl);
-            string action_url = "", error = "", error_description = "", state = "";   //获取POST提交网址及POST提交内容
+            string action_url = "", error = "", error_description = "", state = "";   //Get POST submission URL and POST submission content
             HtmlAgilityPack.HtmlDocument htmldocument6 = new HtmlAgilityPack.HtmlDocument();
             htmldocument6.LoadHtml(ResponseString6);
             HtmlNodeCollection formNodes6 = htmldocument6.DocumentNode.SelectNodes("//form");
@@ -71,8 +71,8 @@
           
             string postdata7 = "error=" + HttpUtility.UrlEncode(error) + "&error_description=" + HttpUtility.UrlEncode(error_description) + "&state=" + HttpUtility.UrlEncode(state);
             var ResponseString7 = RequestPost(action_url, "*/*", contentype, url6, head1, postdata7, mycookiecontainer, out redirect_posturl);
-            //获取语言列表
-            WebHeaderCollection head8 = new WebHeaderCollection()     //头部内容结构
+            //Get language list
+            WebHeaderCollection head8 = new WebHeaderCollection()     //Head content structure
                            {
                                {"Request-Context", "appId=cid-v1:1b965f14-4848-4cb3-9553-535435b89811" },
                                {"Request-Id", "|zIDHB.8SyaY" },
@@ -115,7 +115,7 @@
 
 
 
-            //获取下载链接       
+            //Get download link       
             WebHeaderCollection head9 = new WebHeaderCollection()
                            {
                                {"Request-Context", "appId=cid-v1:1b965f14-4848-4cb3-9553-535435b89811" },
